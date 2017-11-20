@@ -2,10 +2,10 @@ REAN Cloud, Technical Assessment
 ==================================
 Here you can find the below details:
 1. CloudFormation template for VPC ( 01-rean-vpc.yaml) which will create below resources 
-   a. VPC with CIDR block 10.108.0.0/16 
-   b. 2 Public Subnets with Internet Gateway Attached ( 10.108.10.0/24 | 10.108.11.0/24)
-   c. 2 NAT Gateway 
-   d. 2 Private Subnets with NAT Gateway Attache to route traffic to Internet for Private Subnets (10.108.20.0/24 | 10.108.21.0/24)
+  - VPC with CIDR block 10.108.0.0/16 
+  - Public Subnets with Internet Gateway Attached ( 10.108.10.0/24 | 10.108.11.0/24)
+  - 2 NAT Gateway 
+  - 2 Private Subnets with NAT Gateway Attache to route traffic to Internet for Private Subnets (10.108.20.0/24 | 10.108.21.0/24)
 ![](images/rean-vpc-samal.PNG)
 2. Shared Security Group (02-rean-shared-SecurityGroup.yaml),It can be any Security Group within the VPC but typically Organization used Shared Common services with Tier, which will create below resources. The SG naming convention is. SG-Shared-<Tier>-<Env>-E (E is East Region)
    a. SG-Shared-Elb-Mgmt-E ( All the Shared ELB will used this Security Group)
