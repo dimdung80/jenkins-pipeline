@@ -7,13 +7,40 @@ Here you can find the below details:
     - 2 NAT Gateway 
     - 2 Private Subnets with NAT Gateway Attache to route traffic to Internet for Private Subnets (10.108.20.0/24 | 10.108.21.0/24)
 ![](images/rean-vpc-samal.PNG)
-
 2. Shared Security Group (02-rean-shared-SecurityGroup.yaml),It can be any Security Group within the VPC but typically Organization used Shared Common services with Tier, which will create below resources. The SG naming convention is. SG-Shared-<Tier>-<Env>-E (E is East Region)
     - SG-Shared-Elb-Mgmt-E ( All the Shared ELB will used this Security Group)
     - SG-Shared-Web-Mgmt-E ( All the Shared Web will used this Security Group)
     - SG-Shared-App-Mgmt-E ( All the Shared App will used this Security Group)
     - SG-Shared-Dbs-Mgmt-E ( All the Shared Dbs will used this Security Group)
-```
+3. WordPress with Playbook (03-rean-ec2-with-userdata-wordpress.yaml) which can be used as Userdata with CloudFormation templates, Jenkins, Ansible Tower or any CI/CD Tools. It will create below resoruces 
+    - EC2 instances in existing VPC 
+    - Security Group
+    - Pull the code from Github Repo (https://github.com/dimdung80/lab-rean.git) and run the playbook locally for this servers 
+    ```
+          UserData: 
+        "Fn::Base64": !Sub |
+          #!/bin/bash
+          # Install EPEL repo for RHEL 7 
+          rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+          # Install git to clone Github repo 
+          yum install git -y 
+
+          # Install Pip packages 
+          yum install python-pip -y  
+
+          # Install Ansible after the PIP modules 
+          pip install ansible
+
+          #Set clone the git from the Github and run the playbook
+          cd /tmp/ 
+          git -c http.sslVerify=false clone https://github.com/dimdung80/lab-rean/
+          #cd /tmp/lab-rean/workpress/
+          #ansible-playbook -i hosts site.yml 
+          ansible-playbook -i "localhost," -c local lab-rean/wordpress/site.yml
+    ``` 
+4. Wordpress with "AWS::CloudFormation::Init:" 
+
 ```
 dimdung@devopsvdi wordpress]$ cat hosts 
 [ansible]
