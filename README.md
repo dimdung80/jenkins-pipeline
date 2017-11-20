@@ -48,8 +48,8 @@ Here you can find the below details:
     - http://ec2-34-203-36-61.compute-1.amazonaws.com/wordpress/wp-login.php 
 
 5. Playbook-Wordpress 
-    ```
-        Playbook-wordpress
+```
+Playbook-wordpress
 ├── README.md
 └── wordpress
     ├── group_vars
@@ -96,9 +96,9 @@ Here you can find the below details:
     │           └── wp-config.php
     └── site.yml
 
-    ``` 
+ ``` 
 6. Standard Operation Procedure (SOP) docs
-    ```
+```
     dimdung@devopsvdi lab-rean]$ tree SOP
 SOP
 ├── 01-REAN Security and Technical Architecture.pdf
@@ -109,3 +109,4 @@ SOP
 
 0 directories, 5 files
 [dimdung@devopsvdi lab-rean]$ 
+```
