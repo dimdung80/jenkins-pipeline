@@ -1,10 +1,8 @@
-# jenkins-pipeline
-Jenkins PipeLine Jobs
-<hr />
-# lab-rean
-
-$ If you are running playbook from your CM server or your Local workstation for Wordpress with Nginx/http . 
-$ running from your Local Workstation: 
+lab-rean
+========
+If you are running playbook from your CM server or your Local workstation for Wordpress with Nginx/http . 
+1. Running from your Local Workstation: 
+```
 dimdung@devopsvdi wordpress]$ cat hosts 
 [ansible]
 34.238.82.57
@@ -82,4 +80,4 @@ $ Below is tree of Wordpress Playbook for Single Instances Installation
 
 22 directories, 24 files
 [dimdung@devopsvdi tt]$ 
-
+```
