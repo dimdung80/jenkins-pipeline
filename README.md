@@ -1,9 +1,17 @@
-lab-rean
-========
-If you are running playbook from your CM server or your Local workstation for Wordpress with Nginx/http . 
-1. Running from your Local Workstation: 
-2. Running from Jenkins Server
-3. Running from Ansibler Tower 
+REAN Cloud, Technical Assessment
+==================================
+Here you can find the below details:
+1. CloudFormation template for VPC ( 01-rean-vpc.yaml) which will create below resources 
+   a. VPC with CIDR block 10.108.0.0/16 
+   b. 2 Public Subnets with Internet Gateway Attached ( 10.108.10.0/24 | 10.108.11.0/24)
+   c. 2 NAT Gateway 
+   d. 2 Private Subnets with NAT Gateway Attache to route traffic to Internet for Private Subnets (10.108.20.0/24 | 10.108.21.0/24)
+![](images/rean-vpc-samal.PNG)
+2. Shared Security Group (02-rean-shared-SecurityGroup.yaml),It can be any Security Group within the VPC but typically Organization used Shared Common services with Tier, which will create below resources. The SG naming convention is. SG-Shared-<Tier>-<Env>-E (E is East Region)
+   a. SG-Shared-Elb-Mgmt-E ( All the Shared ELB will used this Security Group)
+   b. SG-Shared-Web-Mgmt-E ( All the Shared Web will used this Security Group)
+   c. SG-Shared-App-Mgmt-E ( All the Shared App will used this Security Group)
+   d. SG-Shared-Dbs-Mgmt-E ( All the Shared Dbs will used this Security Group)
 ```
 dimdung@devopsvdi wordpress]$ cat hosts 
 [ansible]
