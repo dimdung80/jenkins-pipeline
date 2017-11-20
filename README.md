@@ -2,6 +2,8 @@ lab-rean
 ========
 If you are running playbook from your CM server or your Local workstation for Wordpress with Nginx/http . 
 1. Running from your Local Workstation: 
+2. Running from Jenkins Server
+3. Running from Ansibler Tower 
 ```
 dimdung@devopsvdi wordpress]$ cat hosts 
 [ansible]
