@@ -14,8 +14,10 @@ Here you can find the below details:
     - SG-Shared-Dbs-Mgmt-E ( All the Shared Dbs will used this Security Group)
 3. WordPress with Playbook (03-rean-ec2-with-userdata-wordpress.yaml) which can be used as Userdata with CloudFormation templates, Jenkins, Ansible Tower or any CI/CD Tools. It will create below resoruces 
     - EC2 instances in existing VPC 
-    - Security Group
+    - Used the Existing Security Group
     - Pull the code from Github Repo (https://github.com/dimdung80/lab-rean.git) and run the playbook locally for this servers 
+    - http://ec2-34-229-176-249.compute-1.amazonaws.com 
+    - http://ec2-34-229-176-249.compute-1.amazonaws.com/wp-login.php
     ```
           UserData: 
         "Fn::Base64": !Sub |
@@ -39,84 +41,71 @@ Here you can find the below details:
           #ansible-playbook -i hosts site.yml 
           ansible-playbook -i "localhost," -c local lab-rean/wordpress/site.yml
     ``` 
-4. Wordpress with "AWS::CloudFormation::Init:" 
+4. Wordpress with "AWS::CloudFormation::Init:" (04-rean-wordpress.yaml), it will create Wordpress fully Functional CM servers 
+    - EC2 instances in existing VPC 
+    - Used the Existing Security Group
+    - http://ec2-34-203-36-61.compute-1.amazonaws.com/wordpress/ 
+    - http://ec2-34-203-36-61.compute-1.amazonaws.com/wordpress/wp-login.php 
 
-```
-dimdung@devopsvdi wordpress]$ cat hosts 
-[ansible]
-34.238.82.57
-[dimdung@devopsvdi wordpress]$ cat site.yml 
-- name: Install WordPress, MariaDB, Nginx, and PHP-FPM
-  hosts: ansible
-  user: ec2-user
-  become: yes
-  become_user: root
-
-  roles:
-    - common
-    - mariadb
-    - nginx
-    - php-fpm
-    - wordpress
-[dimdung@devopsvdi wordpress]$ ansible-playbook -i hosts site.yml 
-or
-[dimdung@devopsvdi wordpress]$ ansible-playbook -i hosts site.yml --private-key=/location_of_your_private_key
-
-$ If you are running Playbook locally : 
-[dimdung@devopsvdi wordpress]$ ansible-playbook -i "localhost," -c local site.yml
-
-
-$ Below is tree of Wordpress Playbook for Single Instances Installation 
-
-[dimdung@devopsvdi tt]$ tree
-.
-└── lab-rean
+5. Playbook-Wordpress 
+    ```
+        Playbook-wordpress
+├── README.md
+└── wordpress
+    ├── group_vars
+    │   └── all
+    ├── hosts
+    ├── LICENSE.md
     ├── README.md
-    └── wordpress
-        ├── group_vars
-        │   └── all
-        ├── hosts
-        ├── LICENSE.md
-        ├── README.md
-        ├── roles
-        │   ├── common
-        │   │   ├── files
-        │   │   │   ├── epel.repo
-        │   │   │   ├── nginx.repo
-        │   │   │   ├── remi.repo
-        │   │   │   ├── RPM-GPG-KEY-EPEL-7
-        │   │   │   ├── RPM-GPG-KEY-NGINX
-        │   │   │   └── RPM-GPG-KEY-remi
-        │   │   └── tasks
-        │   │       └── main.yml
-        │   ├── mariadb
-        │   │   ├── handlers
-        │   │   │   └── main.yml
-        │   │   ├── tasks
-        │   │   │   └── main.yml
-        │   │   └── templates
-        │   │       └── my.cnf.j2
-        │   ├── nginx
-        │   │   ├── handlers
-        │   │   │   └── main.yml
-        │   │   ├── tasks
-        │   │   │   └── main.yml
-        │   │   └── templates
-        │   │       └── default.conf
-        │   ├── php-fpm
-        │   │   ├── handlers
-        │   │   │   └── main.yml
-        │   │   ├── tasks
-        │   │   │   └── main.yml
-        │   │   └── templates
-        │   │       └── wordpress.conf
-        │   └── wordpress
-        │       ├── tasks
-        │       │   └── main.yml
-        │       └── templates
-        │           └── wp-config.php
-        └── site.yml
+    ├── roles
+    │   ├── common
+    │   │   ├── files
+    │   │   │   ├── epel.repo
+    │   │   │   ├── nginx.repo
+    │   │   │   ├── remi.repo
+    │   │   │   ├── RPM-GPG-KEY-EPEL-7
+    │   │   │   ├── RPM-GPG-KEY-NGINX
+    │   │   │   └── RPM-GPG-KEY-remi
+    │   │   └── tasks
+    │   │       └── main.yml
+    │   ├── mariadb
+    │   │   ├── handlers
+    │   │   │   └── main.yml
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── templates
+    │   │       └── my.cnf.j2
+    │   ├── nginx
+    │   │   ├── handlers
+    │   │   │   └── main.yml
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── templates
+    │   │       └── default.conf
+    │   ├── php-fpm
+    │   │   ├── handlers
+    │   │   │   └── main.yml
+    │   │   ├── tasks
+    │   │   │   └── main.yml
+    │   │   └── templates
+    │   │       └── wordpress.conf
+    │   └── wordpress
+    │       ├── tasks
+    │       │   └── main.yml
+    │       └── templates
+    │           └── wp-config.php
+    └── site.yml
 
-22 directories, 24 files
-[dimdung@devopsvdi tt]$ 
-```
+    ``` 
+6. Standard Operation Procedure (SOP) docs
+    ```
+    dimdung@devopsvdi lab-rean]$ tree SOP
+SOP
+├── 01-REAN Security and Technical Architecture.pdf
+├── 02-SOP For Infrastructure CloudFormation (VPC).pdf
+├── 03-SOP For Security Group CloudFormation.pdf
+├── 04-SOP For Wordpress CloudFormation.pdf
+└── 05-SOP For Wordpress with Ansible Playbook + CloudFormation.pdf
+
+0 directories, 5 files
+[dimdung@devopsvdi lab-rean]$ 
